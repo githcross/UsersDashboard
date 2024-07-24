@@ -19,8 +19,8 @@ class MyMixin(LoginRequiredMixin, UserPassesTestMixin):
 @login_required()
 def home(request):
     """ Home Page """
-    admin_count = MyUser.objects.filter(user_type='admin').count()
-    customer_count = MyUser.objects.filter(user_type='customer').count()
+    admin_count = MyUser.objects.filter(user_type='2').count()
+    customer_count = MyUser.objects.filter(user_type='3').count()
     context = {
         'a_count': admin_count,
         'c_count': customer_count,

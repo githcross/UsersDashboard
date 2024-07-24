@@ -6,11 +6,18 @@ from PIL import Image
 import sys
 
 
+class UserType(models.Model):
+    type_name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.type_name
+
 class MyUser(AbstractUser):
     """ User Model with Abstract User"""
     city = models.CharField(max_length=255)
-    user_type = models.CharField(max_length=255, choices=(('admin', 'Admin'),
-                                                          ('customer', 'Customer')))
+    user_type = models.ForeignKey(UserType, on_delete=models.SET_NULL, null=True)
+    #user_type = models.CharField(max_length=255, choices=(('admin', 'Admin'),
+                                                          #('customer', 'Customer')))
 
     def __str__(self):
         return self.username
