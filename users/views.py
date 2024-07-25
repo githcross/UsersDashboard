@@ -12,7 +12,7 @@ from users.forms import UserCreateForm, UserUpdateForm, CustomerUpdateForm, Cust
 class MyMixin(LoginRequiredMixin, UserPassesTestMixin):
     """ Mixin for Authentication and User is Admin or not """
     def test_func(self):
-        return self.request.user.user_type == 'admin'
+        return self.request.user.user_type_id == 1 or self.request.user.user_type_id == 2
 
 
 # Create your views here.
@@ -20,10 +20,12 @@ class MyMixin(LoginRequiredMixin, UserPassesTestMixin):
 def home(request):
     """ Home Page """
     admin_count = MyUser.objects.filter(user_type='2').count()
-    customer_count = MyUser.objects.filter(user_type='3').count()
+    user_count = MyUser.objects.filter(user_type='3').count()
+    tester_count = MyUser.objects.filter(user_type='4').count()
     context = {
         'a_count': admin_count,
-        'c_count': customer_count,
+        'u_count':user_count,
+        't_count': tester_count,
     }
     return render(request, 'users/home.html', context)
 
